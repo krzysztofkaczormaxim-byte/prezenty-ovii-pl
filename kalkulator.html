@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="robots" content="noindex,nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OVII — Kalkulator paczek B2B</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{--grafit:#1b1d20;--grafit2:#242730;--miedz:#c9764a;--miedz-j:#e0955f;--krem:#ece4d8;--krem2:#c9c0b2;--ok:#7fbf7f;--zle:#e07a6a}
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{background:var(--grafit);color:var(--krem);font-family:'Jost',sans-serif;font-weight:300;line-height:1.5;padding:32px 16px}
+  .wrap{max-width:1060px;margin:0 auto}
+  h1{font-family:'Playfair Display',serif;font-size:1.7rem;margin-bottom:4px}
+  h1 span{color:var(--miedz)}
+  .sub{color:var(--krem2);margin-bottom:28px;font-size:.95rem}
+  .grid{display:grid;grid-template-columns:1.1fr .9fr;gap:24px;align-items:start}
+  @media(max-width:860px){.grid{grid-template-columns:1fr}}
+  .panel{background:var(--grafit2);border:1px solid rgba(236,228,216,.1);padding:26px}
+  .panel h2{font-family:'Playfair Display',serif;font-size:1.1rem;color:var(--miedz-j);margin-bottom:18px;letter-spacing:.05em}
+  .row{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:9px 0;border-bottom:1px solid rgba(236,228,216,.06)}
+  .row:last-child{border-bottom:none}
+  .row label{font-size:.95rem}
+  .row small{display:block;color:var(--krem2);font-size:.78rem;font-weight:300}
+  input[type=number]{width:110px;background:var(--grafit);border:1px solid rgba(236,228,216,.18);color:var(--krem);padding:8px 10px;font-family:'Jost',sans-serif;font-size:1rem;text-align:right;outline:none}
+  input[type=number]:focus{border-color:var(--miedz)}
+  select{background:var(--grafit);border:1px solid rgba(236,228,216,.18);color:var(--krem);padding:8px 10px;font-family:'Jost',sans-serif;font-size:.95rem;outline:none}
+  input[type=checkbox]{accent-color:var(--miedz);width:18px;height:18px}
+  .chk{display:flex;align-items:center;gap:10px;flex:1}
+  .wynik .big{font-family:'Playfair Display',serif;font-size:2.4rem;color:var(--miedz-j);line-height:1.1}
+  .wynik .big small{font-size:1rem;color:var(--krem2);font-family:'Jost',sans-serif}
+  .kpi{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:18px}
+  .kpi div{background:var(--grafit);padding:14px;border:1px solid rgba(236,228,216,.08)}
+  .kpi b{display:block;font-size:1.25rem;font-weight:500}
+  .kpi span{font-size:.78rem;color:var(--krem2);letter-spacing:.06em;text-transform:uppercase}
+  .marza-ok{color:var(--ok)} .marza-zle{color:var(--zle)}
+  .break{margin-top:18px;font-size:.9rem}
+  .break .row{padding:5px 0;border-bottom:1px dashed rgba(236,228,216,.08)}
+  .break .row b{font-weight:500}
+  .uwaga{margin-top:16px;padding:12px 14px;background:rgba(224,122,106,.09);border-left:2px solid var(--zle);font-size:.85rem;color:var(--krem2);display:none}
+  .tryb{display:flex;gap:0;margin-bottom:16px;border:1px solid rgba(236,228,216,.15)}
+  .tryb button{flex:1;background:none;border:none;color:var(--krem2);padding:10px;font-family:'Jost',sans-serif;font-size:.85rem;cursor:pointer;letter-spacing:.04em}
+  .tryb button.on{background:var(--miedz);color:#141414;font-weight:500}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Kalkulator paczek B2B <span>OVII</span></h1>
+  <p class="sub">Wszystkie kwoty netto. Domyślne koszty wg ustaleń z 6.07.2026 — każdy można nadpisać. Koszty szacujemy z górką (zasada: lepiej się miło zaskoczyć).</p>
+
+  <div class="grid">
+    <!-- ── KOSZTY ── -->
+    <div class="panel">
+      <h2>Koszty jednostkowe</h2>
+
+      <div class="row">
+        <label>Nakład zamówienia<small>karton 18 zł dotyczy nakładu 1000+; przy mniejszym wpisz wyższą cenę kartonu</small></label>
+        <input type="number" id="naklad" value="1000" min="1" step="10">
+      </div>
+
+      <div class="row">
+        <label>Trunek — koszt własny z butelką i akcyzą<small>wg wariantu nośnika; kawa = tańszy wariant</small></label>
+        <input type="number" id="trunek" value="60" min="0" step="1">
+      </div>
+
+      <div class="row">
+        <label>Karton magnetyczny + wkładka<small>18 zł przy 1000+ (neopak, A3 czarny na magnes)</small></label>
+        <input type="number" id="karton" value="18" min="0" step="0.5">
+      </div>
+
+      <div class="row">
+        <label>Etykieta personalizowana</label>
+        <select id="etykieta">
+          <option value="2.5">biała, ≤50% pokrycia — 2,50 zł</option>
+          <option value="10" selected>ciemna + złoto — 10,00 zł</option>
+          <option value="custom">inna (wpisz) →</option>
+        </select>
+        <input type="number" id="etykietaCustom" value="10" min="0" step="0.5" style="display:none">
+      </div>
+
+      <div class="row">
+        <div class="chk"><input type="checkbox" id="listOn" checked><label for="listOn">List od serca — czarny mat + złoto</label></div>
+        <input type="number" id="list" value="6" min="0" step="0.5">
+      </div>
+
+      <div class="row">
+        <div class="chk"><input type="checkbox" id="kieliszkiOn" checked><label for="kieliszkiOn">Kieliszki z logo OVII (kpl.)</label></div>
+        <input type="number" id="kieliszki" value="40" min="0" step="1">
+      </div>
+
+      <div class="row">
+        <label>Pakowanie (robocizna)</label>
+        <input type="number" id="pakowanie" value="5" min="0" step="0.5">
+      </div>
+
+      <div class="row">
+        <label>Dodatki inne (kawa 250g, paszport itp.)</label>
+        <input type="number" id="inne" value="0" min="0" step="0.5">
+      </div>
+
+      <h2 style="margin-top:26px">Koszty jednorazowe</h2>
+      <div class="row">
+        <label>Projekt etykiety<small>1500 zł netto — rozkłada się na nakład</small></label>
+        <input type="number" id="projekt" value="1500" min="0" step="50">
+      </div>
+      <div class="row">
+        <div class="chk"><input type="checkbox" id="projektKlient"><label for="projektKlient">Klient płaci projekt osobno (opłata projektowa)<small>wtedy nie wlicza się do kosztu sztuki</small></label></div>
+      </div>
+    </div>
+
+    <!-- ── WYNIK ── -->
+    <div class="panel wynik">
+      <h2>Wynik</h2>
+
+      <div class="tryb">
+        <button id="trybCena" class="on">Podaję cenę → widzę zysk</button>
+        <button id="trybMarza">Podaję zysk → widzę cenę</button>
+      </div>
+
+      <div class="row" id="rowCena">
+        <label>Cena sprzedaży netto / szt.</label>
+        <input type="number" id="cena" value="300" min="0" step="5">
+      </div>
+      <div class="row" id="rowMarza" style="display:none">
+        <label>Docelowy zysk na sztuce (zł)</label>
+        <input type="number" id="zyskCel" value="150" min="0" step="5">
+      </div>
+
+      <div style="margin-top:20px">
+        <div class="big" id="wynikGlowny">—</div>
+        <div id="wynikPod" style="color:var(--krem2);font-size:.9rem"></div>
+      </div>
+
+      <div class="kpi">
+        <div><span>Koszt / szt.</span><b id="kosztSzt">—</b></div>
+        <div><span>Marża</span><b id="marzaProc">—</b></div>
+        <div><span>Wartość zamówienia</span><b id="wartosc">—</b></div>
+        <div><span>Zysk łącznie</span><b id="zyskCalk">—</b></div>
+        <div><span>Zaliczka 50%</span><b id="zaliczka">—</b></div>
+        <div><span>Cena brutto (VAT 23%)</span><b id="brutto">—</b></div>
+      </div>
+
+      <div class="break" id="breakdown"></div>
+
+      <div class="uwaga" id="uwagaNaklad">⚠ Nakład poniżej 1000 szt. — cena kartonu 18 zł prawdopodobnie nieosiągalna. Nadpisz koszt kartonu realną wyceną dla tego nakładu.</div>
+      <div class="uwaga" id="uwagaWidelki">⚠ Cena poza widełkami 250–350 zł ustalonymi dla flagowego zestawu.</div>
+    </div>
+  </div>
+</div>
+
+<script>
+const $=id=>document.getElementById(id);
+const pln=v=>v.toLocaleString('pl-PL',{minimumFractionDigits:2,maximumFractionDigits:2})+' zł';
+let tryb='cena';
+
+function kosztJedn(){
+  const n=Math.max(1,+$('naklad').value||1);
+  let et = $('etykieta').value==='custom' ? (+$('etykietaCustom').value||0) : +$('etykieta').value;
+  const sk = {
+    'Trunek (butelka, akcyza)': +$('trunek').value||0,
+    'Karton + wkładka': +$('karton').value||0,
+    'Etykieta personalizowana': et,
+    'List od serca': $('listOn').checked ? (+$('list').value||0) : 0,
+    'Kieliszki z logo': $('kieliszkiOn').checked ? (+$('kieliszki').value||0) : 0,
+    'Pakowanie': +$('pakowanie').value||0,
+    'Dodatki inne': +$('inne').value||0,
+    'Projekt etykiety / nakład': $('projektKlient').checked ? 0 : (+$('projekt').value||0)/n
+  };
+  return {sk, suma:Object.values(sk).reduce((a,b)=>a+b,0), n};
+}
+
+function licz(){
+  const {sk,suma,n}=kosztJedn();
+  let cena, zysk;
+  if(tryb==='cena'){ cena=+$('cena').value||0; zysk=cena-suma;
+    $('wynikGlowny').innerHTML = (zysk>=0?'+':'')+pln(zysk)+' <small>zysku na sztuce</small>';
+    $('wynikGlowny').style.color = zysk>=0?'var(--ok)':'var(--zle)';
+  } else { zysk=+$('zyskCel').value||0; cena=suma+zysk;
+    $('wynikGlowny').innerHTML = pln(cena)+' <small>cena netto / szt.</small>';
+    $('wynikGlowny').style.color='var(--miedz-j)';
+  }
+  const marza = cena>0 ? (zysk/cena*100) : 0;
+  $('wynikPod').textContent = tryb==='cena' ? 'przy cenie '+pln(cena)+' netto/szt.' : 'przy zysku '+pln(zysk)+' na sztuce';
+  $('kosztSzt').textContent = pln(suma);
+  $('marzaProc').textContent = marza.toFixed(1)+' %';
+  $('marzaProc').className = marza>=40?'marza-ok':(marza<20?'marza-zle':'');
+  $('wartosc').textContent = pln(cena*n);
+  $('zyskCalk').textContent = pln(zysk*n);
+  $('zyskCalk').style.color = zysk>=0?'var(--ok)':'var(--zle)';
+  $('zaliczka').textContent = pln(cena*n*0.5);
+  $('brutto').textContent = pln(cena*1.23);
+  $('breakdown').innerHTML = Object.entries(sk).filter(([k,v])=>v>0)
+    .map(([k,v])=>`<div class="row"><span>${k}</span><b>${pln(v)}</b></div>`).join('')
+    +`<div class="row"><span><b>Koszt razem / szt.</b></span><b>${pln(suma)}</b></div>`;
+  $('uwagaNaklad').style.display = (n<1000 && (+$('karton').value)<=18) ? 'block':'none';
+  $('uwagaWidelki').style.display = (cena>0 && (cena<250||cena>350)) ? 'block':'none';
+}
+
+$('etykieta').addEventListener('change',e=>{ $('etykietaCustom').style.display = e.target.value==='custom'?'inline-block':'none'; licz(); });
+$('trybCena').onclick=()=>{tryb='cena';$('trybCena').classList.add('on');$('trybMarza').classList.remove('on');$('rowCena').style.display='flex';$('rowMarza').style.display='none';licz()};
+$('trybMarza').onclick=()=>{tryb='marza';$('trybMarza').classList.add('on');$('trybCena').classList.remove('on');$('rowCena').style.display='none';$('rowMarza').style.display='flex';licz()};
+document.querySelectorAll('input,select').forEach(el=>el.addEventListener('input',licz));
+licz();
+</script>
+</body>
+</html>

@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="robots" content="noindex,nofollow">
+<title>OVII — Małe arcydzieła dla Twoich partnerów (one-pager A4)</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  /* One-pager A4 — drukuj do PDF (Ctrl+P, A4, bez marginesów, grafika tła włączona) */
+  :root{--grafit:#1b1d20;--miedz:#c9764a;--miedz-j:#e0955f;--zloto:#d4af6a;--krem:#ece4d8;--krem2:#b8b0a2}
+  *{margin:0;padding:0;box-sizing:border-box}
+  @page{size:A4;margin:0}
+  body{background:#333;display:flex;justify-content:center;padding:20px}
+  .a4{width:210mm;min-height:297mm;background:var(--grafit);color:var(--krem);font-family:'Jost',sans-serif;font-weight:300;padding:14mm 16mm;position:relative;display:flex;flex-direction:column}
+  @media print{body{background:none;padding:0}.a4{box-shadow:none}}
+  h1,h2{font-family:'Playfair Display',serif;font-weight:600}
+  .top{display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid rgba(212,175,106,.4);padding-bottom:6mm;margin-bottom:7mm}
+  .logo{font-family:'Playfair Display',serif;font-size:22pt;letter-spacing:.35em}
+  .logo span{color:var(--miedz)}
+  .top .co{font-size:8.5pt;color:var(--krem2);text-align:right;line-height:1.5}
+  h1{font-size:21pt;line-height:1.25;margin-bottom:4mm}
+  h1 em{font-style:italic;color:var(--miedz-j)}
+  .lead{font-size:10.5pt;color:var(--krem2);max-width:150mm;margin-bottom:7mm;line-height:1.55}
+  .cols{display:grid;grid-template-columns:1.05fr .95fr;gap:8mm;flex:1}
+  .foto{background:linear-gradient(160deg,#242730,#2d3038);border:1px solid rgba(201,118,74,.3);display:flex;align-items:center;justify-content:center;color:var(--krem2);font-size:8.5pt;letter-spacing:.12em;text-transform:uppercase;text-align:center;min-height:70mm}
+  h2{font-size:12pt;color:var(--miedz-j);margin:5mm 0 3mm}
+  ul{list-style:none}
+  li{padding:1.8mm 0 1.8mm 6mm;position:relative;font-size:9.5pt;line-height:1.45}
+  li::before{content:"◆";position:absolute;left:0;color:var(--miedz);font-size:7pt;top:2.6mm}
+  li b{font-weight:500}
+  .kalendarz{border:1px solid rgba(212,175,106,.35);margin-top:4mm}
+  .kalendarz .wiersz{display:flex;border-bottom:1px solid rgba(212,175,106,.2);font-size:9pt}
+  .kalendarz .wiersz:last-child{border-bottom:none}
+  .kalendarz .data{width:34mm;padding:2.5mm 3mm;font-family:'Playfair Display',serif;color:var(--zloto);border-right:1px solid rgba(212,175,106,.2);font-size:9.5pt}
+  .kalendarz .opis{padding:2.5mm 3mm;color:var(--krem);flex:1}
+  .dowody{display:grid;grid-template-columns:repeat(4,1fr);gap:3mm;margin-top:5mm}
+  .dowod{border-top:2px solid var(--miedz);padding-top:2mm;font-size:8pt;color:var(--krem2);line-height:1.4}
+  .dowod b{display:block;color:var(--krem);font-size:9pt;font-weight:500;margin-bottom:1mm}
+  .stopka{margin-top:6mm;border-top:1px solid rgba(212,175,106,.4);padding-top:4mm;display:flex;justify-content:space-between;align-items:center}
+  .cta{font-size:11pt}
+  .cta b{font-family:'Playfair Display',serif;color:var(--miedz-j);font-size:12.5pt;font-weight:600}
+  .kontakt{text-align:right;font-size:8.5pt;color:var(--krem2);line-height:1.6}
+  .uwaga{position:absolute;bottom:3mm;left:16mm;right:16mm;font-size:6.5pt;color:#6a6459;text-align:center}
+</style>
+</head>
+<body>
+<div class="a4">
+  <div class="top">
+    <div class="logo">OVII<span>.</span></div>
+    <div class="co">Rzemieślnicza destylarnia i palarnia kawy<br>Maksymilianowo k. Poznania · prezenty.ovii.pl</div>
+  </div>
+
+  <h1>Wręczaj <em>małe arcydzieła</em>.<br>Zobacz autentyczny zachwyt.</h1>
+  <p class="lead">Markowa butelka z doklejoną wizytówką nie jest niczyją wizytówką. Tworzymy zestawy prezentowe, przy których Twój partner na moment zamiera — a Ty wychodzisz na człowieka, który dba o każdy detal.</p>
+
+  <div class="cols">
+    <div>
+      <div class="foto">[ ZDJĘCIE GŁÓWNE:<br>zestaw otwarty — butelka z personalizowaną etykietą,<br>kieliszki, list na czarnym papierze ]</div>
+      <div class="dowody">
+        <div class="dowod"><b>Miedziany alembik</b>Powolna destylacja z całych owoców. Rzemiosło, nie marketing.</div>
+        <div class="dowod"><b>Najwięcej medali w PL</b>Obiektywny dowód jakości — zero ryzyka wpadki.</div>
+        <div class="dowod"><b>95% wysyłek w 24h</b>Jeden partner, jedna faktura, spokojny grudzień.</div>
+        <div class="dowod"><b>100% z Polski</b>Surowce od lokalnych rolników. Historia, którą wypada się chwalić.</div>
+      </div>
+    </div>
+    <div>
+      <h2 style="margin-top:0">W zestawie</h2>
+      <ul>
+        <li><b>Rzemieślniczy trunek z Twoim logo</b> — etykieta zaprojektowana tak, jakby butelka od zawsze była Twoja. Do wyboru: wódki, giny, okowity, likiery [lub kawa z naszej palarni].</li>
+        <li><b>List od serca</b> — piszesz go z nami w 10 minut, drukujemy na czarnym macie ze złotem. To on robi moment wręczenia.</li>
+        <li><b>Dwa kieliszki z logo OVII</b> — żeby toast wzniesiono od razu.</li>
+        <li><b>Eleganckie pudełko na magnes</b> z wkładką chroniącą całość w transporcie.</li>
+        <li><b>Opcja premium:</b> listy indywidualne dla [X] najważniejszych odbiorców + „Zapas Prezesa" do szuflady na niezapowiedzianych VIP-ów.</li>
+      </ul>
+
+      <h2>Ceny</h2>
+      <ul>
+        <li>Zestawy od <b>[CENA] zł netto</b> / szt. — cena zależy od wybranego trunku.</li>
+        <li>Personalizacja etykiet w cenie od 120 szt.; poniżej — opłata projektowa [KWOTA] zł.</li>
+        <li>Zaliczka 50% przy zamówieniu.</li>
+      </ul>
+
+      <h2>Kalendarz — produkujemy raz, w jednej partii</h2>
+      <div class="kalendarz">
+        <div class="wiersz"><div class="data">do 31.08</div><div class="opis">zamówienie z zaliczką → [BONUS EARLY-BIRD]</div></div>
+        <div class="wiersz"><div class="data">do 30.09</div><div class="opis"><b>gwarancja wysyłki na 1 grudnia</b></div></div>
+        <div class="wiersz"><div class="data">po 30.09</div><div class="opis">realizacja ok. 1,5 mies. — święta niepewne</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="stopka">
+    <div class="cta">Pierwszy krok — za darmo:<br><b>wizualizacja butelki z Twoim logo w 1 dzień roboczy</b></div>
+    <div class="kontakt">
+      [Imię i nazwisko, rola]<br>
+      [telefon] · [e-mail]<br>
+      prezenty.ovii.pl
+    </div>
+  </div>
+
+  <div class="uwaga">Oferta przeznaczona wyłącznie dla przedsiębiorców. Drake sp. z o.o., Maksymilianowo 40, 64-060 Maksymilianowo, NIP 9950260358.</div>
+</div>
+</body>
+</html>

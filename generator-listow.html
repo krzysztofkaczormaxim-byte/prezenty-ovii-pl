@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="robots" content="noindex,nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OVII — List od serca</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Jost:wght@300;400;500&family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+<style>
+  :root{--grafit:#1b1d20;--grafit2:#242730;--miedz:#c9764a;--miedz-j:#e0955f;--zloto:#d4af6a;--krem:#ece4d8;--krem2:#c9c0b2;--ok:#7fbf7f;--zle:#e07a6a}
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{background:var(--grafit);color:var(--krem);font-family:'Jost',sans-serif;font-weight:300;line-height:1.6;padding:36px 16px}
+  .wrap{max-width:1120px;margin:0 auto}
+  h1{font-family:'Playfair Display',serif;font-size:1.8rem}
+  h1 span{color:var(--miedz)}
+  .sub{color:var(--krem2);margin:6px 0 30px;max-width:52em}
+  .grid{display:grid;grid-template-columns:1fr 1.1fr;gap:26px;align-items:start}
+  @media(max-width:920px){.grid{grid-template-columns:1fr}}
+  .panel{background:var(--grafit2);border:1px solid rgba(236,228,216,.1);padding:28px}
+  .panel h2{font-family:'Playfair Display',serif;font-size:1.05rem;color:var(--miedz-j);margin-bottom:18px}
+  .q{margin-bottom:18px}
+  .q label{display:block;font-size:.86rem;letter-spacing:.04em;color:var(--krem2);margin-bottom:6px}
+  .q label b{color:var(--krem);font-weight:500}
+  input[type=text],input[type=password],textarea{width:100%;background:var(--grafit);border:1px solid rgba(236,228,216,.16);color:var(--krem);padding:11px 13px;font-family:'Jost',sans-serif;font-size:.98rem;outline:none;transition:.2s}
+  input:focus,textarea:focus{border-color:var(--miedz)}
+  textarea{resize:vertical;min-height:56px}
+  .inline{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  .opcje{display:flex;gap:8px;flex-wrap:wrap}
+  .opcje input{display:none}
+  .opcje label{border:1px solid rgba(236,228,216,.2);padding:8px 16px;cursor:pointer;font-size:.88rem;color:var(--krem2);transition:.2s}
+  .opcje input:checked+label{background:var(--miedz);color:#141414;border-color:var(--miedz);font-weight:500}
+  .btn{display:inline-block;padding:14px 30px;border:1px solid var(--miedz);color:var(--krem);letter-spacing:.1em;text-transform:uppercase;font-size:.82rem;font-weight:500;background:linear-gradient(135deg,#9c5530,var(--miedz));cursor:pointer;font-family:'Jost',sans-serif;transition:.2s}
+  .btn:hover{transform:translateY(-1px)}
+  .btn:disabled{opacity:.5;cursor:wait;transform:none}
+  .btn.ghost{background:none;color:var(--miedz-j)}
+  .akcje{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
+  .hint{color:var(--krem2);font-size:.8rem;margin-top:10px}
+  .zapis{font-size:.78rem;color:var(--ok);opacity:0;transition:.4s}
+  .zapis.on{opacity:1}
+  details{margin-bottom:18px;border:1px solid rgba(236,228,216,.12)}
+  details summary{padding:12px 16px;cursor:pointer;font-size:.9rem;color:var(--miedz-j);letter-spacing:.04em;list-style:none}
+  details summary::before{content:"⚙ "}
+  details .inner{padding:4px 16px 16px}
+  .czlowiek{display:none;background:rgba(201,118,74,.1);border:1px solid var(--miedz);padding:14px 16px;margin-top:14px}
+  .czlowiek.on{display:block}
+  .czlowiek label{font-size:.9rem;color:var(--krem)}
+  .czlowiek input{width:90px;margin-top:8px}
+  .limit{font-size:.8rem;color:var(--zle);margin-top:8px;display:none}
+
+  .list-karta{background:#141414;border:1px solid rgba(212,175,106,.4);padding:52px 48px;position:relative;box-shadow:0 20px 60px rgba(0,0,0,.5)}
+  .list-karta::before{content:"";position:absolute;inset:12px;border:1px solid rgba(212,175,106,.25);pointer-events:none}
+  .list-karta .znak{font-family:'Playfair Display',serif;color:var(--zloto);letter-spacing:.4em;text-align:center;font-size:.95rem;margin-bottom:34px}
+  #tresc{font-family:'Cormorant Garamond',serif;font-size:1.22rem;color:#e9ddc5;line-height:1.75;white-space:pre-wrap;outline:none;min-height:280px}
+  #tresc:focus{background:rgba(212,175,106,.04)}
+  .puste{color:var(--krem2);font-style:italic;font-family:'Cormorant Garamond',serif;font-size:1.15rem;text-align:center;padding:60px 20px}
+
+  @media print{
+    body{background:#141414;padding:0}
+    .panel:first-child,.akcje,.hint,h1,.sub,.zapis{display:none!important}
+    .grid{display:block}
+    .list-karta{box-shadow:none;min-height:100vh}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>List od serca <span>OVII</span></h1>
+  <p class="sub">Najpierw wybierz, do kogo i jakim głosem mówisz — pytania dopasują się do Ciebie. Twoje odpowiedzi zapisują się same: możesz zamknąć przeglądarkę i wrócić, nic nie przepadnie.</p>
+
+  <div class="grid">
+    <div class="panel">
+
+      <details>
+        <summary>Ustawienia AI (klucz, model, instrukcja)</summary>
+        <div class="inner">
+          <div class="q"><label><b>Klucz API Google Gemini</b> (aistudio.google.com → Get API key). Tylko do testów prototypu — w produkcji klucz trzyma serwer.</label>
+            <input type="password" id="apikey" placeholder="AIza..." autocomplete="off">
+          </div>
+          <div class="q"><label><b>Model</b></label>
+            <input type="text" id="model" value="gemini-2.5-flash">
+          </div>
+          <div class="q"><label><b>Instrukcja dla AI</b> — możesz ją dowolnie zmieniać, zapisuje się automatycznie</label>
+            <textarea id="instrukcja" rows="9"></textarea>
+          </div>
+        </div>
+      </details>
+
+      <h2>Krok 1 — rodzaj i ton</h2>
+
+      <div class="q"><label><b>Rodzaj listu</b></label>
+        <div class="opcje">
+          <input type="radio" name="tryb" id="tr1" value="wspolny" checked onchange="odswiez()"><label for="tr1">Wspólny — jeden do wszystkich paczek</label>
+          <input type="radio" name="tryb" id="tr2" value="indywidualny" onchange="odswiez()"><label for="tr2">Indywidualny — premium, limitowany</label>
+        </div>
+      </div>
+
+      <div class="q"><label><b>Ton listu</b> — od niego zależą pytania</label>
+        <div class="opcje">
+          <input type="radio" name="ton" id="t1" value="oficjalny" onchange="odswiez()"><label for="t1">Oficjalny</label>
+          <input type="radio" name="ton" id="t2" value="cieply" checked onchange="odswiez()"><label for="t2">Ciepły, partnerski</label>
+          <input type="radio" name="ton" id="t3" value="humor" onchange="odswiez()"><label for="t3">Z przymrużeniem oka</label>
+        </div>
+        <p class="hint" id="hintTonu"></p>
+      </div>
+
+      <h2 style="margin-top:24px">Krok 2 — opowiedz <span class="zapis" id="zapis">✓ zapisano</span></h2>
+      <div id="pytania"></div>
+
+      <div class="q inline">
+        <div id="formaBox"><label><b>Forma</b></label>
+          <div class="opcje">
+            <input type="radio" name="forma" id="f1" value="pan"><label for="f1">Pan / Pani</label>
+            <input type="radio" name="forma" id="f2" value="imie" checked><label for="f2">Po imieniu</label>
+          </div>
+        </div>
+        <div><label><b>Podpis</b> (Ty / firma)</label><input type="text" id="podpis" placeholder="np. Krzysztof, OVII"></div>
+      </div>
+
+      <!-- Weryfikacja człowieka przed pierwszym użyciem AI -->
+      <div class="czlowiek" id="czlowiek">
+        <label><b>Szybka weryfikacja</b> — pokaż, że nie jesteś robotem: ile to <span id="zadanie"></span>?</label>
+        <input type="text" id="odpCzlowiek" inputmode="numeric">
+      </div>
+      <p class="limit" id="limitInfo"></p>
+
+      <div class="akcje">
+        <button class="btn" id="btnAI" onclick="generujAI()">Napisz list (AI)</button>
+        <button class="btn ghost" onclick="kopiujPrompt()">Kopiuj prompt</button>
+        <button class="btn ghost" onclick="window.print()">Drukuj / PDF</button>
+        <button class="btn ghost" onclick="wyczysc()" title="Czyści odpowiedzi (nie rusza klucza API ani instrukcji)">Wyczyść</button>
+      </div>
+      <p class="hint">AI przerabia surowe notatki na płynny list — nie cytuje ich dosłownie i nie dodaje faktów, których nie podałeś. Bez klucza użyj „Kopiuj prompt" i wklej do dowolnego czatu AI. Limit: 5 listów na 10 minut.</p>
+    </div>
+
+    <div class="panel" style="background:none;border:none;padding:0">
+      <div class="list-karta">
+        <div class="znak">O V I I</div>
+        <div id="tresc" contenteditable="true"><div class="puste">Tu pojawi się Twój list.<br>Odpowiedz na pytania i kliknij „Napisz list".</div></div>
+      </div>
+      <p class="hint">Kliknij w treść listu, aby edytować własnymi słowami. Tak będzie wyglądał druk: czarny mat, złote tłoczenie.</p>
+    </div>
+  </div>
+</div>
+
+<script>
+const $=id=>document.getElementById(id);
+const radio=n=>document.querySelector(`input[name=${n}]:checked`).value;
+const v=id=>($(id)?$(id).value.trim():'');
+
+/* ── 6 zestawów pytań: [tryb][ton] ── */
+const CFG={
+ wspolny:{
+  oficjalny:{
+   hint:'Elegancki list od firmy do partnerów. Jedna ankieta, jeden plik do druku na cały nakład.',
+   pola:[
+    ['q1','Zwrot do odbiorców','np. Szanowni Państwo'],
+    ['q0','Nazwa Waszej firmy','np. Instal-Bud'],
+    ['q2','Jaki był mijający rok dla Waszej firmy i współpracy z partnerami?','np. rok wymagający, ale zamknęliśmy największy kontrakt w historii firmy...'],
+    ['q3','Wydarzenie roku, które zapamiętacie?','np. otwarcie nowego zakładu, na którym byli z nami nasi partnerzy...'],
+    ['q4','Co cenicie w swoich partnerach biznesowych?','np. rzetelność i to, że dane słowo znaczy u nich więcej niż podpisana umowa'],
+    ['q5','Za co dziękujecie w tym roku?','np. za zaufanie i terminowe, partnerskie rozliczenia'],
+    ['q6','Czego życzycie na nadchodzący rok?','np. stabilności, zdrowia i projektów, z których można być dumnym']]},
+  cieply:{
+   hint:'List, jaki pisze się do ludzi, z którymi naprawdę dobrze się pracuje.',
+   pola:[
+    ['q1','Jak zwracasz się do partnerów?','np. Drodzy Przyjaciele'],
+    ['q0','Nazwa Waszej firmy','np. Instal-Bud'],
+    ['q2','Co Was wspólnie spotkało w tym roku — co było trudne, a co się udało?','np. wiosna dała nam popalić, ale jesienią odbiliśmy sobie z nawiązką...'],
+    ['q3','Który moment z partnerami zostanie z Wami na dłużej?','np. wspólne świętowanie odbioru hali o 23:00, na pace od pizzy...'],
+    ['q4','Co sprawia, że z tymi ludźmi chce się pracować?','np. że w trudnych momentach graliśmy do jednej bramki, bez wyciągania paragrafów'],
+    ['q5','Za co z serca dziękujecie?','np. za cierpliwość przy poślizgach i szczere rozmowy zamiast oficjalnych pism'],
+    ['q6','Czego im życzycie — zawodowo i po ludzku?','np. spokoju, zdrowia i kontraktów, które cieszą, a nie tylko wypełniają Excela']]},
+  humor:{
+   hint:'List dla firm, które z partnerami są po imieniu. Szczery, z uśmiechem — bez korpomowy.',
+   pola:[
+    ['q1','Jak zaczynasz, gdy piszesz do ludzi, których lubisz?','np. Kochani / Moi Drodzy / No dobra, święta...'],
+    ['q0','Nazwa Waszej firmy','np. Instal-Bud'],
+    ['q2','Co w tym roku poszło zupełnie nie tak, a dziś już Was śmieszy?','np. pomyliliśmy ciągniki przy załadunku i klient dostał 20 palet cudzych okien...'],
+    ['q3','Z czego jesteście w tym roku nieskromnie dumni?','np. że przetrwaliśmy remont biura, dwie kontrole i jedno wesele firmowe'],
+    ['q4','Co byście robili, gdyby nie Wasi partnerzy? (szczerze)','np. pewnie dalej dzwonili po hurtowniach z błaganiem o terminy'],
+    ['q5','Za co należą im się podziękowania... a za co może przeprosiny?','np. dziękujemy za wyrozumiałość, przepraszamy za nasze poczucie humoru na spotkaniach'],
+    ['q6','Czego im życzycie — poza tym, co piszą wszyscy?','np. żeby konkurencja dalej spała, a kawa nigdy nie stygła']]}
+ },
+ indywidualny:{
+  oficjalny:{
+   hint:'Osobisty, elegancki list do jednej osoby. Opcja premium — limitowana liczba w zamówieniu.',
+   pola:[
+    ['q1','Komu wręczasz prezent? (imię i nazwisko)','np. Marek Nowak'],
+    ['q0','Firma / rola','np. prezes Instal-Bud'],
+    ['q2','Jak zaczęła się Państwa współpraca i ile już trwa?','np. od przetargu w 2019, wygranego o włos...'],
+    ['q3','Wspólne osiągnięcie, które najbardziej Pan ceni?','np. wspólna realizacja inwestycji, o której pisała branżowa prasa'],
+    ['q4','Co wyróżnia tę osobę jako partnera biznesowego?','np. bezwzględna terminowość i słowność, także w trudnych momentach'],
+    ['q5','Za co chce Pan podziękować w tym roku?','np. za zaufanie przy nowym kontrakcie i rekomendacje'],
+    ['q6','Czego Pan życzy na nadchodzący rok?','np. realizacji planów inwestycyjnych i zdrowia dla rodziny']]},
+  cieply:{
+   hint:'List do człowieka, którego znasz i lubisz — konkretny i od serca.',
+   pola:[
+    ['q1','Komu wręczasz prezent? (imię)','np. Marek'],
+    ['q0','Firma / rola','np. prezes Instal-Bud'],
+    ['q2','Jak zaczęła się Wasza współpraca i ile już trwa?','np. zaczęliśmy 6 lat temu od zlecenia, które miało trwać dwa tygodnie...'],
+    ['q3','Wspólny moment, do którego wracasz myślami?','np. nocne dokańczanie hali przed odbiorem w 2023...'],
+    ['q4','Co w tej osobie autentycznie doceniasz? (konkret, nie ogólnik)','np. że zawsze odbiera telefon, nawet ze złymi wiadomościami — zwłaszcza ze złymi'],
+    ['q5','Za co chcesz podziękować właśnie w tym roku?','np. za cierpliwość przy poślizgu w marcu i za polecenie nas dalej'],
+    ['q6','Czego życzysz — zawodowo i prywatnie?','np. spokojniejszego tempa, udanego wejścia na nowy rynek, zdrowia dla rodziny']]},
+  humor:{
+   hint:'Dla relacji, w których można sobie pozwolić na szczery uśmiech. Limitowana opcja premium.',
+   pola:[
+    ['q1','Komu wręczasz prezent? (imię / ksywka)','np. Marek'],
+    ['q0','Firma / rola','np. prezes Instal-Bud'],
+    ['q2','Jak się poznaliście? (im dziwniej, tym lepiej)','np. pokłóciliśmy się o miejsce parkingowe pod urzędem skarbowym...'],
+    ['q3','Wasza wspólna przygoda lub wpadka, którą wspominacie ze śmiechem?','np. delegacja, w której GPS zawiózł nas do innego województwa'],
+    ['q4','Co ta osoba robi lepiej od Ciebie — i nigdy jej tego nie powiedziałeś?','np. negocjuje tak, że druga strona jeszcze dziękuje'],
+    ['q5','Za co dziękujesz, a za co wypadałoby przeprosić?','np. dziękuję za cierpliwość, przepraszam za moje poczucie humoru o 7 rano'],
+    ['q6','Czego życzysz — poza zdrowiem i pieniędzmi, bo to piszą wszyscy?','np. żeby syn wreszcie oddał mu garaż i skończył ten doktorat']]}
+ }
+};
+
+const INSTRUKCJA_DOMYSLNA=`Zasady — bezwzględne:
+1. PRZETWÓRZ notatki w płynny, naturalny list. Nie cytuj odpowiedzi dosłownie, nie sklejaj ich w kolejności ankiety — wybierz, co najmocniejsze, i opowiedz to własnymi słowami nadawcy.
+2. Zachowaj wszystkie konkrety (nazwy, liczby, wydarzenia). NICZEGO nie zmyślaj i nie dodawaj faktów, których nie ma w notatkach.
+3. Zero banałów i korpomowy ("dynamiczny rozwój", "owocna współpraca" — zakazane). List ma brzmieć, jakby człowiek napisał go odręcznie, ale od serca.
+4. Wątki bez odpowiedzi pomiń bez śladu.
+5. Kontekst: list będzie wydrukowany na czarnym papierze ze złotem i dołączony do luksusowego zestawu z rzemieślniczym alkoholem destylarni OVII (miedziany alembik). Możesz raz, subtelnie nawiązać do rzemiosła lub powolnego dojrzewania relacji — ale alkohol nie może być tematem listu.
+6. Zwróć WYŁĄCZNIE treść listu z podpisem, bez komentarzy i nagłówków. Długość: 140-190 słów.`;
+
+/* ── AUTOZAPIS — nic nie przepada przy odświeżeniu/błędzie ── */
+const KLUCZ_ZAPISU='ovii-list-draft';
+function zapisz(){
+  const d={tryb:radio('tryb'),ton:radio('ton'),forma:radio('forma'),pola:{},
+    apikey:v('apikey'),model:v('model'),instrukcja:$('instrukcja').value,
+    podpis:v('podpis'),tresc:$('tresc').innerText};
+  ['q0','q1','q2','q3','q4','q5','q6'].forEach(id=>{if($(id))d.pola[id]=$(id).value});
+  localStorage.setItem(KLUCZ_ZAPISU,JSON.stringify(d));
+  const z=$('zapis');z.classList.add('on');clearTimeout(z._t);z._t=setTimeout(()=>z.classList.remove('on'),1200);
+}
+function wczytaj(){
+  try{return JSON.parse(localStorage.getItem(KLUCZ_ZAPISU))||{}}catch(e){return{}}
+}
+function wyczysc(){
+  if(!confirm('Wyczyścić odpowiedzi? (klucz API i instrukcja zostaną)'))return;
+  const d=wczytaj();['q0','q1','q2','q3','q4','q5','q6','podpis'].forEach(id=>{if($(id))$(id).value='';delete d.pola});
+  d.podpis='';d.tresc='';
+  localStorage.setItem(KLUCZ_ZAPISU,JSON.stringify(d));
+  odswiez();
+  $('tresc').innerHTML='<div class="puste">Tu pojawi się Twój list.</div>';
+}
+
+function odswiez(){
+  const c=CFG[radio('tryb')][radio('ton')];
+  const d=wczytaj();
+  $('hintTonu').textContent=c.hint;
+  $('pytania').innerHTML=c.pola.map(([id,label,ph],i)=>{
+    const nr=(id==='q0')?'':`<b>${i===0?1:i}.</b> `;
+    const pole=(id==='q0'||id==='q1')
+      ?`<input type="text" id="${id}" placeholder="${ph}">`
+      :`<textarea id="${id}" placeholder="${ph}"></textarea>`;
+    return `<div class="q"><label>${nr}${label}</label>${pole}</div>`;
+  }).join('');
+  // przywróć zapisane odpowiedzi
+  if(d.pola) for(const [id,val] of Object.entries(d.pola)){ if($(id)) $(id).value=val; }
+  if(d.podpis!==undefined) $('podpis').value=d.podpis;
+  $('formaBox').style.display=radio('tryb')==='indywidualny'?'block':'none';
+  document.querySelectorAll('#pytania input,#pytania textarea').forEach(el=>el.addEventListener('input',zapisz));
+}
+
+/* ── Prompt ── */
+function buildPrompt(){
+  const tryb=radio('tryb'),ton=radio('ton');
+  const c=CFG[tryb][ton];
+  const qa=c.pola.map(([id,label])=>`- ${label}: ${v(id)||'(brak odpowiedzi — pomiń ten wątek)'}`).join('\n');
+  return `Napisz ${tryb==='wspolny'?'list od firmy do jej partnerów biznesowych, dołączany do świątecznych prezentów (jeden wspólny list do wszystkich odbiorców)':'osobisty list do prezentu biznesowego dla jednej konkretnej osoby'}. Po polsku.
+
+Ton: ${ton==='cieply'?'ciepły, partnerski — jak do człowieka, którego się lubi i szanuje':ton==='humor'?'z przymrużeniem oka — szczery humor, autoironia dozwolona, zero wygłupów i suchych żartów':'oficjalny, elegancki — ale żywy, nie urzędowy'}.
+${tryb==='indywidualny'?`Forma: ${radio('forma')==='pan'?'per Pan/Pani':'po imieniu'}.\n`:''}
+Surowe odpowiedzi nadawcy (notatki, nie gotowe zdania):
+${qa}
+Podpis: ${v('podpis')||'(brak)'}
+
+${$('instrukcja').value}`;
+}
+function kopiujPrompt(){
+  navigator.clipboard.writeText(buildPrompt()).then(()=>alert('Prompt skopiowany — wklej go do dowolnego czatu AI.'));
+}
+
+/* ── Weryfikacja człowieka + limit użycia (prototyp; w produkcji: captcha i limity PO STRONIE SERWERA) ── */
+let zadanie={a:0,b:0};
+function pokazWeryfikacje(){
+  zadanie={a:2+Math.floor(Math.random()*7),b:2+Math.floor(Math.random()*7)};
+  $('zadanie').textContent=`${zadanie.a} + ${zadanie.b}`;
+  $('czlowiek').classList.add('on');
+  $('odpCzlowiek').focus();
+}
+function czlowiekOK(){
+  if(sessionStorage.getItem('ovii-czlowiek')==='tak')return true;
+  if(!$('czlowiek').classList.contains('on')){pokazWeryfikacje();return false;}
+  if(parseInt($('odpCzlowiek').value,10)===zadanie.a+zadanie.b){
+    sessionStorage.setItem('ovii-czlowiek','tak');
+    $('czlowiek').classList.remove('on');
+    return true;
+  }
+  pokazWeryfikacje();
+  return false;
+}
+const LIMIT_ILE=5, LIMIT_OKNO=10*60*1000, LIMIT_PRZERWA=15*1000;
+function limitOK(){
+  const teraz=Date.now();
+  let uzycia=[];try{uzycia=JSON.parse(localStorage.getItem('ovii-uzycia'))||[]}catch(e){}
+  uzycia=uzycia.filter(t=>teraz-t<LIMIT_OKNO);
+  const info=$('limitInfo');
+  if(uzycia.length&&teraz-uzycia[uzycia.length-1]<LIMIT_PRZERWA){
+    info.textContent='Chwila oddechu — odczekaj kilkanaście sekund między listami.';info.style.display='block';return false;
+  }
+  if(uzycia.length>=LIMIT_ILE){
+    info.textContent='Limit 5 listów na 10 minut wykorzystany. Doprecyzuj odpowiedzi i wróć za chwilę.';info.style.display='block';return false;
+  }
+  info.style.display='none';
+  uzycia.push(teraz);localStorage.setItem('ovii-uzycia',JSON.stringify(uzycia));
+  return true;
+}
+
+/* ── Generowanie: Google Gemini (prototyp; produkcyjnie klucz i limity po stronie serwera) ── */
+async function generujAI(){
+  const key=v('apikey');
+  if(!key){alert('Wklej klucz API Gemini (Ustawienia AI) albo użyj „Kopiuj prompt".');return;}
+  if(!czlowiekOK())return;
+  if(!limitOK())return;
+  const btn=$('btnAI');btn.disabled=true;btn.textContent='Piszę...';
+  $('tresc').innerText='List powstaje...';
+  try{
+    const model=v('model')||'gemini-2.5-flash';
+    const r=await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${encodeURIComponent(key)}`,{
+      method:'POST',
+      headers:{'content-type':'application/json'},
+      body:JSON.stringify({
+        contents:[{parts:[{text:buildPrompt()}]}],
+        generationConfig:{maxOutputTokens:1000,temperature:0.9}
+      })
+    });
+    const d=await r.json();
+    if(d.error)throw new Error(d.error.message||'Błąd API');
+    const tekst=d.candidates?.[0]?.content?.parts?.map(p=>p.text).join('')||'';
+    if(!tekst)throw new Error('Model nie zwrócił tekstu.');
+    $('tresc').innerText=tekst.trim();
+    zapisz();
+  }catch(e){
+    $('tresc').innerHTML='<div class="puste">Nie udało się wygenerować listu:<br>'+e.message+'<br><br>Twoje odpowiedzi są zapisane — nic nie przepadło.<br>Użyj „Kopiuj prompt" i wklej do dowolnego czatu AI.</div>';
+  }finally{
+    btn.disabled=false;btn.textContent='Napisz list (AI)';
+  }
+}
+
+/* ── Start: przywróć wszystko z autozapisu ── */
+(function(){
+  const d=wczytaj();
+  if(d.tryb)document.querySelector(`input[name=tryb][value=${d.tryb}]`).checked=true;
+  if(d.ton)document.querySelector(`input[name=ton][value=${d.ton}]`).checked=true;
+  if(d.forma)document.querySelector(`input[name=forma][value=${d.forma}]`).checked=true;
+  $('instrukcja').value=d.instrukcja||INSTRUKCJA_DOMYSLNA;
+  if(d.apikey)$('apikey').value=d.apikey;
+  if(d.model)$('model').value=d.model;
+  odswiez();
+  if(d.tresc&&d.tresc.trim()&&!d.tresc.includes('Tu pojawi się'))$('tresc').innerText=d.tresc;
+  ['apikey','model','instrukcja','podpis'].forEach(id=>$(id).addEventListener('input',zapisz));
+  document.querySelectorAll('input[type=radio]').forEach(el=>el.addEventListener('change',zapisz));
+  $('tresc').addEventListener('input',zapisz);
+})();
+</script>
+</body>
+</html>
