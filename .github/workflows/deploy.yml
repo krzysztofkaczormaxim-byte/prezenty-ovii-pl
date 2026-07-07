@@ -15,8 +15,8 @@ jobs:
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
           server: ${{ secrets.FTP_SERVER }}
-          username: ${{ secrets.FTP_USERNAME }}
-          password: ${{ secrets.FTP_PASSWORD }}
+          username: ${{ secrets.FTP_USERNAME_PREZENTY }}
+          password: ${{ secrets.FTP_PASSWORD_PREZENTY }}
           server-dir: /home/srv71182/domains/prezenty.ovii.pl/
           exclude: |
             **/.git*
