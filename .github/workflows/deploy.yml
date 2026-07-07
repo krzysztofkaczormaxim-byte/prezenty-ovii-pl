@@ -17,6 +17,7 @@ jobs:
           server: ${{ secrets.FTP_SERVER }}
           username: ${{ secrets.FTP_USERNAME_PREZENTY }}
           password: ${{ secrets.FTP_PASSWORD_PREZENTY }}
+          protocol: ftps
           server-dir: /home/srv71182/domains/prezenty.ovii.pl/
           exclude: |
             **/.git*
