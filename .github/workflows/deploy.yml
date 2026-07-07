@@ -20,4 +20,6 @@ jobs:
           FTP_USER: ${{ secrets.FTP_USERNAME_PREZENTY }}
           FTP_PASS: ${{ secrets.FTP_PASSWORD_PREZENTY }}
         run: |
-          lftp -u "$FTP_USER,$FTP_PASS" -e 'set ftp:ssl-force true; set ftp:ssl-protect-data true; set net:max-retries 5; set net:timeout 40; mirror -R --verbose --exclude-glob .git* --exclude-glob .github* --exclude-glob README.md ./ ./; bye' "$FTP_SERVER"
+          # Uwaga: verify-certificate=false zatwierdzone przez wlasciciela repo -
+          # serwer FTP seohost uzywa certyfikatu bez publicznego wystawcy.
+          lftp -u "$FTP_USER,$FTP_PASS" -e 'set ssl:verify-certificate false; set ftp:ssl-force true; set ftp:ssl-protect-data true; set net:max-retries 5; set net:timeout 40; mirror -R --verbose --exclude-glob .git* --exclude-glob .github* --exclude-glob README.md ./ ./; bye' "$FTP_SERVER"
