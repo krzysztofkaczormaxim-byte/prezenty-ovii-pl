@@ -28,7 +28,7 @@ jobs:
         run: |
           # Uwaga: verify-certificate=false zatwierdzone przez wlasciciela repo -
           # serwer FTP seohost uzywa certyfikatu bez publicznego wystawcy.
-          lftp -u "$FTP_USER,$FTP_PASS" -e 'set ssl:verify-certificate false; set ftp:ssl-force true; set ftp:ssl-protect-data true; set net:max-retries 5; set net:timeout 40; mirror -R --verbose --exclude-glob .git* --exclude-glob .github* --exclude-glob README.md ./ ./; bye' "$FTP_SERVER"
+          lftp -u "$FTP_USER,$FTP_PASS" -e 'set ssl:verify-certificate false; set ftp:ssl-force true; set ftp:ssl-protect-data true; set net:max-retries 5; set net:timeout 40; mirror -R --verbose --exclude-glob .git* --exclude-glob .github* --exclude-glob README.md ./ ./public_html/; bye' "$FTP_SERVER"
 
       - name: Purge cache Cloudflare
         env:
